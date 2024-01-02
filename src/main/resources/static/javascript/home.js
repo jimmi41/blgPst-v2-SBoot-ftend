@@ -3,7 +3,7 @@ let allPosts = [];
 fetchPosts()
 .then(renderPosts)
 .catch(error => {
-    console.error('Error rendering posts:', error);
+    console.error('Error rendering posts  home .js:', error);
   });
  
 
@@ -13,7 +13,7 @@ async function fetchPosts() {
         const fetchedPosts = await response.json();
         allPosts = fetchedPosts; // Store fetched posts in the global variable
     } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error('Error fetching posts home .js:', error);
     }
 }
 
@@ -77,9 +77,6 @@ function renderPosts() {
             window.location.href = `/storyPage?postId=${clickedPostId}`;
         });
     }
-
-    //saving allPosts array into local storage so that we can access it in other js files and pages
-    localStorage.setItem('allPosts', JSON.stringify(allPosts));
 }
 
 
