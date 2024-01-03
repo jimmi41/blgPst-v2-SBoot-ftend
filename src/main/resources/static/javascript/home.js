@@ -9,7 +9,14 @@ fetchPosts()
 
 async function fetchPosts() {
     try {
-        const response = await fetch('http://localhost:8080/myBlog/all');
+        let response;
+        if (typeof window !== 'undefined') {
+          const apiUrl = 'http://localhost:8080';
+           response = await fetch(`${apiUrl}/myBlog/all`);
+        } else {
+          const apiUrl = process.env.API_URL;
+          response = await fetch(`${apiUrl}/myBlog/all`);
+        }
         const fetchedPosts = await response.json();
         allPosts = fetchedPosts; // Store fetched posts in the global variable
     } catch (error) {

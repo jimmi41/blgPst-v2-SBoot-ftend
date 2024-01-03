@@ -11,7 +11,16 @@ fetchOnePost()
 
 async function fetchOnePost() {
     try {
-        const post = await fetch(`http://localhost:8080/myBlog/getOnePost/${clickedPostId}`);
+        let post;
+        if (typeof window !== 'undefined')
+        {
+            const apiUrl = 'http://localhost:8080';
+            post = await fetch(`${apiUrl}/myBlog/getOnePost/${clickedPostId}`);
+        } else
+        {
+            const apiUrl = process.env.API_URL;
+            post = await fetch(`${apiUrl}/myBlog/getOnePost/${clickedPostId}`);
+        }
         const fetchedPost = await post.json();
         clickedPostData = fetchedPost; // Store fetched post in the global variable
     } catch (error) {
