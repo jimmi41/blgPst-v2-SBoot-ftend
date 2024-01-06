@@ -10,8 +10,7 @@ fetchPosts()
 async function fetchPosts() {
     try {
         let response;
-        const evnVar = process.env.envVariable;
-        if (evnVar !== 'prod') {
+        if (typeof window === 'undefined') {
           const apiUrl = 'http://localhost:8080';
            response = await fetch(`${apiUrl}/myBlog/all`);
         } else {
