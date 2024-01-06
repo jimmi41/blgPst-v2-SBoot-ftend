@@ -18,7 +18,7 @@ async function fetchOnePost() {
             post = await fetch(`${apiUrl}/myBlog/getOnePost/${clickedPostId}`);
         } else
         {
-            const apiUrl = process.env.API_URL;
+//            const apiUrl = process.env.API_URL; ////in railway i will directly define apiUrl
             post = await fetch(`${apiUrl}/myBlog/getOnePost/${clickedPostId}`);
         }
         const fetchedPost = await post.json();
