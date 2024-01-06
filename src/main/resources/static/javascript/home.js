@@ -14,7 +14,7 @@ async function fetchPosts() {
           const apiUrl = 'http://localhost:8080';
            response = await fetch(`${apiUrl}/myBlog/all`);
         } else {
-          const apiUrl = process.env.API_URL;
+//          const apiUrl = process.env.API_URL; //in railway i will directly define apiUrl
           response = await fetch(`${apiUrl}/myBlog/all`);
         }
         const fetchedPosts = await response.json();
