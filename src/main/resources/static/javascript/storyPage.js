@@ -12,7 +12,8 @@ fetchOnePost()
 async function fetchOnePost() {
     try {
         let post;
-        if (typeof window !== 'undefined')
+        const evnVar = process.env.envVariable;
+        if (evnVar !== 'prod')
         {
             const apiUrl = 'http://localhost:8080';
             post = await fetch(`${apiUrl}/myBlog/getOnePost/${clickedPostId}`);
