@@ -51,8 +51,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>com.thaledi.blogpost.MyBlogPostApplication</mainClass> </configuration>
 			</plugin>
 		</plugins>
 	</build>
