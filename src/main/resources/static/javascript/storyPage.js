@@ -19,7 +19,7 @@ async function fetchOnePost() {
         } else
         {
             const appUrl = process.env.API_URL; ////in railway i will directly define apiUrl
-            post = await fetch('https://blgpst-v2-sboot-ftend-production.up.railway.app/myBlog/getOnePost/${clickedPostId}');
+            post = await fetch(`https://blgpst-v2-sboot-ftend-production.up.railway.app/myBlog/getOnePost/${clickedPostId}`);
         }
         const fetchedPost = await post.json();
         clickedPostData = fetchedPost; // Store fetched post in the global variable
