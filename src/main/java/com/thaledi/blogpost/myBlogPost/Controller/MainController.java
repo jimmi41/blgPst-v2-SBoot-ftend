@@ -5,6 +5,8 @@ import com.thaledi.blogpost.myBlogPost.PostRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -18,6 +20,7 @@ public class MainController  {
     @Autowired
     private PostRepository postRepository;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(path="/add")
     public @ResponseBody Post addNewPost (@RequestParam String title ,
                                           @RequestParam String subtitle,
@@ -36,6 +39,7 @@ public class MainController  {
         return (blogPost);
 // curl http://localhost:8080/myBlog/add -d title="44test title" -d subtitle="44test Subtitle" -d dateOfPost="2023-12-25T22:33:44" -d imageUrl="https://example.com/44image.jpg" -d postData="44this is actual post data or the story"
     }
+
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Post> getAllPosts(){
         return postRepository.findAll();
@@ -49,7 +53,7 @@ public class MainController  {
             return ResponseEntity.notFound().build();
         }
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(path="/delete/{id}")
     public String deleteUser(@PathVariable Integer id) {
         Optional<Post> post = postRepository.findById(id);
@@ -61,7 +65,7 @@ public class MainController  {
         }
 
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public @ResponseBody Post updatePost(@PathVariable Integer id,
                                          @RequestParam(required = false) String title,
