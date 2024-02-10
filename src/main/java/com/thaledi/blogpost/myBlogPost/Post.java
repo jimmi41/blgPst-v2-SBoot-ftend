@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "post")  // Explicitly specify table name for clarity
@@ -24,7 +24,7 @@ public class Post {
     private String subtitle;
 
     @Column(nullable = false)
-    private LocalDateTime dateOfPost;
+    private LocalDate dateOfPost;
 
     @Column(length = 255)
     private String imageUrl;  // Use camelCase for consistency
@@ -57,11 +57,11 @@ public class Post {
         this.subtitle = subtitle;
     }
 
-    public LocalDateTime getDateOfPost() {
+    public LocalDate getDateOfPost() {
         return dateOfPost;
     }
 
-    public void setDateOfPost(LocalDateTime dateOfPost) {
+    public void setDateOfPost(LocalDate dateOfPost) {
         this.dateOfPost = dateOfPost;
     }
 

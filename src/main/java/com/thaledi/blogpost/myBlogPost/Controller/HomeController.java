@@ -1,5 +1,6 @@
 package com.thaledi.blogpost.myBlogPost.Controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -14,4 +15,17 @@ public class HomeController {
     public String showStoryPage() {
         return "storyPage"; // This corresponds to storyPage.html
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/adminPage")
+    public String showAdminPage() {
+        return "adminPage"; // This corresponds to storyPage.html
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/adminPageEdit")
+    public String showAdminPageEdit() {
+        return "adminPageEdit"; // This corresponds to storyPage.html
+    }
+
 }

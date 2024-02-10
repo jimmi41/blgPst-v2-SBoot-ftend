@@ -219,6 +219,23 @@ body {
 
 
 }
+.topHeading{
+    text-align: center;
+    color: red;
+}
+.addNewPostBtn{
+    padding:10px;
+    background:wheat;
+    color:green;
+    font-size:medium;
+}
+.adminPageEdit{
+    text-align: center;
+    color: red;
+    font-size: 15px;
+}
+
+
 /* Mobile-friendly adjustments */
 @media (max-width: 800px) {
     .post-header{
