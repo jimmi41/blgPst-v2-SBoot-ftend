@@ -17,7 +17,7 @@ async function fetchPosts() {
 //          const apiUrl = process.env.API_URL; //in railway i will directly define apiUrl
 //we can't access env variable at frontend directly without using some 3rd party logic so
 //for now i am just adding hardcoded url to it
-          response = await fetch('https://blgpst-v2-sboot-ftend-production.up.railway.app/myBlog/all');
+          response = await fetch('https://thaledi-nama.up.railway.app/myBlog/all');
         }
         const fetchedPosts = await response.json();
         allPosts = fetchedPosts; // Store fetched posts in the global variable

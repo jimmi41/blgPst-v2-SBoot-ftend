@@ -46,9 +46,9 @@ async function fetchOnePost() {
         } else
         {
             //          const appUrl = process.env.API_URL; ////in railway i will directly define apiUrl
-            const apiUrl = 'https://blgpst-v2-sboot-ftend-production.up.railway.app';
+            const apiUrl = 'https://thaledi-nama.up.railway.app';
             post = await fetch(`${apiUrl}/myBlog/getOnePost/${clickedPostId}`);
-//            post = await fetch(`https://blgpst-v2-sboot-ftend-production.up.railway.app/myBlog/getOnePost/${clickedPostId}`);
+//            post = await fetch(`https://thaledi-nama.up.railway.app/myBlog/getOnePost/${clickedPostId}`);
         }
         if(post.ok===false)
         {
@@ -97,7 +97,7 @@ function onUpdatePost(form){
     const formData = new FormData(form);
     event.preventDefault();
     console.log("we clicked submit button");
-    const apiUrl = `https://blgpst-v2-sboot-ftend-production.up.railway.app/myBlog/update/${clickedPostId}`;
+    const apiUrl = `https://thaledi-nama.up.railway.app/myBlog/update/${clickedPostId}`;
 
     let requestBody = {};
     // Use FormData to serialize the form data
@@ -136,7 +136,7 @@ function onAddNewPost(form){
     const formData = new FormData(form);
     event.preventDefault();
     console.log("we clicked Add new Post button");
-    const apiUrl = `https://blgpst-v2-sboot-ftend-production.up.railway.app/myBlog/add`;
+    const apiUrl = `https://thaledi-nama.up.railway.app/myBlog/add`;
 
         let requestBody = {};
         // Use FormData to serialize the form data
@@ -175,7 +175,7 @@ function deleteCurrentPost(form){
     if(confirmed)
     {
         console.log("we clicked delete current Post button");
-        const apiUrl = `https://blgpst-v2-sboot-ftend-production.up.railway.app/myBlog/delete/${clickedPostId}`;
+        const apiUrl = `https://thaledi-nama.up.railway.app/myBlog/delete/${clickedPostId}`;
 
         fetch(apiUrl, {
             method: 'DELETE',
