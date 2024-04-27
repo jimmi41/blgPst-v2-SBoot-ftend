@@ -1,32 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ThalediNama</title>
+    
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
     <script src="/javascript/home.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&display=swap" rel="stylesheet">
-</head>
-<body>
-<div class="timeline">
-    <template id="post-template">
-        <div class="container">
-            <img src="" alt="">
-            <div class="textbox">
-                <h2>Title</h2>
-                <small class>subtitle</small>
-                <p>
-                    Post data.
-                </p>
-                <span class=""></span>
-            </div>
 
-        </div>
-    </template>
-</div>
-</body>
+</head>
+    <body>
+    <div th:replace="~{navbar.html}"></div>
+    <div class="timeline">
+        <template id="post-template">
+            <div class="container">
+                <img src="" alt="">
+                <div class="textbox">
+                    <h2>Title</h2>
+                    <small class>subtitle</small>
+                    <p>
+                        Post data.
+                    </p>
+                    <span class=""></span>
+                </div>
+
+            </div>
+        </template>
+    </div>
+    </body>
+
+
 </html>
