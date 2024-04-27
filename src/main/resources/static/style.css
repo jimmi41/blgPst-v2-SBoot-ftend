@@ -234,6 +234,26 @@ body {
     color: red;
     font-size: 15px;
 }
+/* Navbar */
+.navbar {
+    background-color: #dee88e;
+    color : black;
+    padding: 10px 0;
+    font-family: 'Noto Sans Devanagari', 'Devanagari', 'poppins', 'sans-serif';
+}
+.navbar-nav {
+    list-style: none;
+    color : black;
+    padding: 10px;
+}
+.nav-item{
+    color: hsl(0, 0%, 0%)   ;
+    display: inline;
+/*    disply inline property to show all the navbar items into 1 row not in multiple rows*/
+    color : black;
+    margin-right: 20px; /* optional, adds some spacing between list items */
+}
+/*Nav bar css closed    */
 
 
 /* Mobile-friendly adjustments */
