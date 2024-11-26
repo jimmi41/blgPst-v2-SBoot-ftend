@@ -73,8 +73,18 @@ function renderPosts() {
         const subtitle = container.querySelector('small');
         subtitle.textContent = post.subtitle;
 
-        const postData = container.querySelector('p');
-        postData.textContent = post.postData.slice(0,120)+".......";//so that only some part of text content will be visible
+
+        const quillContainer = container.querySelector('#quill-container');
+        const quillInstance = new Quill(quillContainer, {
+            theme: 'snow',
+            readOnly: true,
+            modules: {
+                toolbar: false // Disable the toolbar
+            }
+        });
+        quillInstance.root.innerHTML =  post.postData.slice(0,120)+".......";
+//        const postData = container.querySelector('p');
+//        postData.textContent = post.postData.slice(0,120)+".......";//so that only some part of text content will be visible
 
         postsContainer.appendChild(clonedPost);
     }
