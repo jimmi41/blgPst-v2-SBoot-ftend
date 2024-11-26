@@ -65,3 +65,10 @@ button.deleteButton {
     background-color: #ff3333;
     margin-top: 10px;
 }
+
+#quill-container{
+    border: none !important; /* Remove the border */
+    box-shadow: none !important; /* Remove any shadow */
+    padding: 0; /* Optional: Adjust padding if needed */
+    font-size: 18px;
+}

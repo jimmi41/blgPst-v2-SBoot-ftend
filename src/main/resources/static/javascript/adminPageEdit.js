@@ -1,6 +1,15 @@
 const urlParams = new URLSearchParams(window.location.search);
 const clickedPostId = urlParams.get('postId');
 let clickedPostData = null;
+//we are using this 3rd party libraryy quill so that we can provide user the text formatting optoins
+//and we are initializing in all cases as either new post or existing post we need that formatting
+//Quill can't be used directly on text area so using it on div and then passing quill's value to text area
+const quill = new Quill('#quill-container', {
+    theme: 'snow' // we can use 'bubble' for a different UI
+});
+// Update the hidden textarea with Quill content
+//const storyTextarea = document.getElementById('story');
+//storyTextarea.value = quill.root.innerHTML;
 
 if(clickedPostId!==null)
 {
@@ -73,8 +82,9 @@ function fillRenderDetail() {
     const subtitle = document.getElementById('subtitle');
     subtitle.value = clickedPostData.subtitle;
 
-    const postData = document.getElementById('story');
-    postData.value = clickedPostData.postData;
+//    const postData = document.getElementById('story');
+//    postData.value = clickedPostData.postData;
+    quill.root.innerHTML = clickedPostData.postData;
 
     const dateOfPost = document.getElementById('date');
     dateOfPost.value = clickedPostData.dateOfPost;
@@ -104,7 +114,8 @@ function onUpdatePost(form){
     requestBody.title = form.elements['title'].value;
     requestBody.subtitle = form.elements['subtitle'].value;
     requestBody.imageUrl = form.elements['image'].value;
-    requestBody.postData = form.elements['story'].value;
+//    requestBody.postData = form.elements['story'].value;
+    requestBody.postData =  quill.root.innerHTML;
     requestBody.dateOfPost = form.elements['date'].value;
 
     requestBody = JSON.stringify(requestBody);
@@ -143,7 +154,8 @@ function onAddNewPost(form){
         requestBody.title = form.elements['title'].value;
         requestBody.subtitle = form.elements['subtitle'].value;
         requestBody.imageUrl = form.elements['image'].value;
-        requestBody.postData = form.elements['story'].value;
+//        requestBody.postData = form.elements['story'].value; this was the old line now we are using quill
+        requestBody.postData =  quill.root.innerHTML;
         requestBody.dateOfPost = form.elements['date'].value;
 
         requestBody = JSON.stringify(requestBody);

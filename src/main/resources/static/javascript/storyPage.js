@@ -8,7 +8,6 @@ fetchOnePost()
     console.error('Error filling render detail post in story page .js:', error);
   });
 
-
 async function fetchOnePost() {
     try {
         let post;
@@ -36,8 +35,17 @@ function fillRenderDetail() {
     const subtitle = document.querySelector('.post-subtitle');
     subtitle.textContent = clickedPostData.subtitle;
 
-    const postData = document.querySelector('.post-data');
-    postData.textContent = clickedPostData.postData;
+    const quillContainer = document.querySelector('#quill-container');
+    const quillInstance = new Quill(quillContainer, {
+        theme: 'snow',
+        readOnly: true,
+        modules: {
+            toolbar: false // Disable the toolbar
+        }
+    });
+    quillInstance.root.innerHTML =  clickedPostData.postData;
+//    const postData = document.querySelector('.post-data');
+//    postData.textContent = clickedPostData.postData;
 
     const image = document.querySelector('.post-img img');
     image.src = clickedPostData.imageUrl; // Assuming you have an imageUrl property
