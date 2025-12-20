@@ -19,7 +19,7 @@ async function fetchPosts() {
 //for now i am just adding hardcoded url to it
 //            const apiUrl = 'http://localhost:8080';
 //           response = await fetch(`${apiUrl}/myBlog/all`);
-          response = await fetch('https://thaledi-nama.up.railway.app/myBlog/all');
+          response = await fetch('/myBlog/all');
         }
         const fetchedPosts = await response.json();
         allPosts = fetchedPosts; // Store fetched posts in the global variable
