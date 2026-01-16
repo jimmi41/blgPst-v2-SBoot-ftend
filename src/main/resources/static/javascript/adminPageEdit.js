@@ -1,12 +1,66 @@
 const urlParams = new URLSearchParams(window.location.search);
 const clickedPostId = urlParams.get('postId');
+const MAX_IMAGE_SIZE = 400 * 1024; // 400 KB
+
 let clickedPostData = null;
-//we are using this 3rd party libraryy quill so that we can provide user the text formatting optoins
-//and we are initializing in all cases as either new post or existing post we need that formatting
-//Quill can't be used directly on text area so using it on div and then passing quill's value to text area
-const quill = new Quill('#quill-container', {
-    theme: 'snow' // we can use 'bubble' for a different UI
+
+// ---------- IMAGE SIZE VALIDATION (IMMEDIATE FEEDBACK) ----------
+document.addEventListener("DOMContentLoaded", () => {
+
+    const imageInput = document.getElementById("imageFile");
+
+    // Buttons may or may not exist depending on mode
+    const addBtn = document.getElementById("addPostBtn");
+    const updateBtn = document.getElementById("updatePostBtn");
+
+    // Create error message dynamically if not present
+    let errorText = document.getElementById("imageError");
+    if (!errorText && imageInput) {
+        errorText = document.createElement("p");
+        errorText.id = "imageError";
+        errorText.style.color = "red";
+        errorText.style.display = "none";
+        errorText.style.fontSize = "14px";
+        errorText.textContent = "Image size must be less than 500 KB";
+        imageInput.parentNode.appendChild(errorText);
+    }
+
+    if (!imageInput) return;
+
+    imageInput.addEventListener("change", () => {
+        const file = imageInput.files[0];
+
+        // No file → allow submit
+        if (!file) {
+            clearImageError();
+            return;
+        }
+
+        // Size validation
+        if (file.size > MAX_IMAGE_SIZE) {
+            showImageError();
+        } else {
+            clearImageError();
+        }
+    });
+
+    function showImageError() {
+        errorText.style.display = "block";
+        imageInput.style.border = "2px solid red";
+
+        if (addBtn) addBtn.disabled = true;
+        if (updateBtn) updateBtn.disabled = true;
+    }
+
+    function clearImageError() {
+        errorText.style.display = "none";
+        imageInput.style.border = "";
+
+        if (addBtn) addBtn.disabled = false;
+        if (updateBtn) updateBtn.disabled = false;
+    }
 });
+
 // Update the hidden textarea with Quill content
 //const storyTextarea = document.getElementById('story');
 //storyTextarea.value = quill.root.innerHTML;
@@ -14,7 +68,7 @@ const quill = new Quill('#quill-container', {
 if(clickedPostId!==null)
 {
     //removing the add form
-    const addForm = document.getElementById("addNewPostForm");
+    const addForm = document.getElementById("addPostSection");
     addForm.remove();
     //clickedPostId !== null means we are updataing existing post.
     fetchOnePost()
@@ -42,6 +96,12 @@ else
     dateField.value=dateToday;
 
 }
+//we are using this 3rd party libraryy quill so that we can provide user the text formatting optoins
+//and we are initializing in all cases as either new post or existing post we need that formatting
+//Quill can't be used directly on text area so using it on div and then passing quill's value to text area
+const quill = new Quill('#quill-container', {
+    theme: 'snow' // we can use 'bubble' for a different UI
+});
 
 
 
@@ -88,20 +148,8 @@ function fillRenderDetail() {
     dateOfPost.value = clickedPostData.dateOfPost;
 
 
-    const image = document.getElementById('image');
-    image.value = clickedPostData.imageUrl;
-
-    if(image.src == null)
-    {
-        image.src = "/images/bilkhet.jpg";
-    }
-    image.onerror = () => {
-        image.src = "/images/bilkhet.jpg";
-    }
-    //    const formAction = document.getElementById('updateForm');
-    //    formAction.action = `/update/${clickedPostId}`;
 }
-function onUpdatePost(form){
+async function onUpdatePost(form){
     const formData = new FormData(form);
     event.preventDefault();
     console.log("we clicked submit button");
@@ -111,8 +159,6 @@ function onUpdatePost(form){
     // Use FormData to serialize the form data
     requestBody.title = form.elements['title'].value;
     requestBody.subtitle = form.elements['subtitle'].value;
-    requestBody.imageUrl = form.elements['image'].value;
-//    requestBody.postData = form.elements['story'].value;
     requestBody.postData =  quill.root.innerHTML;
     requestBody.dateOfPost = form.elements['date'].value;
 
@@ -131,8 +177,15 @@ function onUpdatePost(form){
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         return response.json();
-    }).then(data => {
-        window.location.href =`/adminPage`;
+    }).then( async (data) => {
+         const imageInput = document.getElementById("imageFile");
+         const imageFile = imageInput ? imageInput.files[0] : null;
+
+         if (imageFile) {
+             await uploadPostImage(clickedPostId, imageFile);
+         }
+
+         window.location.href = `/adminPage`;
     })
         .catch(error => {
         // Handle errors during the fetch
@@ -141,7 +194,7 @@ function onUpdatePost(form){
     // Prevent the default form submission
     return false;
 }
-function onAddNewPost(form){
+async function onAddNewPost(form){
     const formData = new FormData(form);
     event.preventDefault();
     console.log("we clicked Add new Post button");
@@ -151,8 +204,6 @@ function onAddNewPost(form){
         // Use FormData to serialize the form data
         requestBody.title = form.elements['title'].value;
         requestBody.subtitle = form.elements['subtitle'].value;
-        requestBody.imageUrl = form.elements['image'].value;
-//        requestBody.postData = form.elements['story'].value; this was the old line now we are using quill
         requestBody.postData =  quill.root.innerHTML;
         requestBody.dateOfPost = form.elements['date'].value;
 
@@ -169,8 +220,17 @@ function onAddNewPost(form){
               throw new Error(`HTTP error! in admin page edit inside on Add new post Status: ${response.status}`);
             }
             return response.json();
-        }).then( response =>{
-            window.location.href =`/adminPage` ;
+        }).then(async (response) =>{
+                //we are first saving the post getting the id then firing the image upload endpoint with that id
+                const postId = response.id;
+                const imageInput = document.getElementById("imageFile");
+                const imageFile = imageInput ? imageInput.files[0] : null;
+
+                if (imageFile) {
+                    await uploadPostImage(postId, imageFile);
+                }
+
+                window.location.href = `/adminPage`;
             }
         ).catch(error => {
             //errors during the fetch
@@ -178,9 +238,24 @@ function onAddNewPost(form){
         });
         return false;
 }
+async function uploadPostImage(postId, imageFile) {
+
+    const formData = new FormData();
+    formData.append("file", imageFile);
+
+    const response = await fetch(`/myBlog/uploadImage/${postId}`, {
+        method: "POST",
+        body: formData
+    });
+
+    if (!response.ok) {
+        console.error("Image upload failed for postId:", postId);
+    }
+}
+
 function deleteCurrentPost(form){
     //we could have done better instead of using form we could have just used the
-    //action event on delet button and then using fetch would have called delete api
+    //action event on delete button and then using fetch would have called delete api
     const confirmed = confirm("Are you sure you want to delete this post?");
     if(confirmed)
     {

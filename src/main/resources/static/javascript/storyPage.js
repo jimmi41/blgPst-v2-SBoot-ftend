@@ -27,7 +27,6 @@ async function fetchOnePost() {
 }
 
 function fillRenderDetail() {
-
     const title = document.querySelector('.post-title');
     title.textContent = clickedPostData.title;
 
@@ -47,17 +46,13 @@ function fillRenderDetail() {
 //    postData.textContent = clickedPostData.postData;
 
     const image = document.querySelector('.post-img img');
-    image.src = clickedPostData.imageUrl; // Assuming you have an imageUrl property
+//    image.src = clickedPostData.imageUrl; // Assuming you have an imageUrl property
+      image.src = `/myBlog/image/${clickedPostId}`;
 
-    //if image url is null
-    if(image.src == null)
-    {
-        image.src = "/images/bilkhet.jpg";
-    }
-    //image url exists but that image is not present in image folder so we will give the default image to this
+    //if some error comes show static image
     image.onerror = () => {
         image.src = "/images/bilkhet.jpg";
-    }
+    };
 }
 
 

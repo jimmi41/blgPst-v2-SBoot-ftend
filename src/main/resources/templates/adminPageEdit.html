@@ -22,6 +22,7 @@
     <h1 class="edit" id="editString">Edit Blog Post</h1>
 
     <div class="adminPageEdit">
+        <div id="editPostSection">
         <form id="updateForm"  method="POST" onsubmit="return onUpdatePost(this,event)"
               >
             <!-- Title -->
@@ -32,9 +33,15 @@
             <label for="subtitle">Subtitle:</label>
             <input type="text" id="subtitle" name="subtitle" value="Subtitle" required>
 
-            <!-- Image -->
-            <label for="image">Image URL:</label>
-            <input type="text" id="image" name="image" value="Image URL" required>
+
+                <!-- Image -->
+                <label for="image">Image URL:</label>
+                <input type="file" id="imageFile" accept="image/*">
+                <p id="imageError" style="color:red; display:none; font-size:14px;">
+                    Image size must be less than 500 KB
+                </p>
+
+
 
             <!-- Story/Content -->
 <!--            <label for="story">Story/Content:</label>-->
@@ -47,14 +54,16 @@
             <label for="date">Date:</label>
             <input type="date" id="date" name="date" value="2022-01-01" required>
 
-            <button class="Update button" type="submit">Update Post</button>
+            <button id="updatePostBtn" class="Update button" type="submit">Update Post</button>
         </form>
+        </div>
 
         <form id="deletePostForm" action="" onsubmit="return deleteCurrentPost(this,event)">
             <!-- Delete button -->
             <button type="submit" class="deleteButton">Delete Post</button>
         </form>
 
+        <div id="addPostSection">
         <form id="addNewPostForm"  method="POST" onsubmit="return onAddNewPost(this,event)"
         >
             <!-- Title -->
@@ -65,15 +74,21 @@
             <label for="subtitle">Subtitle:</label>
             <input type="text" id="subtitle" name="subtitle" value="Subtitle" required>
 
-            <!-- Image -->
-            <label for="image">Image URL:</label>
-            <input type="text" id="image" name="image" value="Image URL" required>
+
+                <!-- Image -->
+                <label for="image">Image URL:</label>
+<!--            <input type="text" id="image" name="image" value="Image URL" required>-->
+                <input type="file" id="imageFile" accept="image/*">
+                <p id="imageError" style="color:red; display:none; font-size:14px;">
+                    Image size must be less than 500 KB
+                </p>
+
 
             <!-- Story/Content -->
 <!--            <label for="story">Story/Content:</label>-->
 <!--            <textarea id="story" name="story" rows="10" required>Story Content</textarea>-->
             <div id="bordered-div">
-            <div id="editor-container" style="height: 500px;width:700px;">Story Content</div>
+            <div id="quill-container" style="height: 500px;width:700px;">Story Content</div>
             </div>
 <!--            <textarea id="story" name="story" rows="10"  required></textarea>-->
 
@@ -81,8 +96,9 @@
             <label for="date">Date:</label>
             <input type="date" id="date" name="date" value="" required>
 
-            <button class="Add New Post button" type="submit">Add New Post</button>
+            <button id="addPostBtn" class="Add New Post button" type="submit">Add New Post</button>
         </form>
+        </div>
 
     </div>
 </div>

@@ -1,10 +1,5 @@
 package com.thaledi.blogpost.myBlogPost;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 
 
 import java.time.LocalDate;
@@ -31,6 +26,13 @@ public class Post {
 
     @Column(nullable = false, columnDefinition = "TEXT")  // Specify TEXT for large text
     private String postData;  // Use camelCase for consistency
+
+    @Lob
+    @Column(name = "image_data", columnDefinition = "LONGBLOB")
+    private byte[] imageData;
+
+    @Column(name = "image_content_type")
+    private String imageContentType;
 
     // Getters and setters
     public Integer getId() {
@@ -81,6 +83,22 @@ public class Post {
         this.postData = postData;
     }
 
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+    }
+
 
     @Override
     public String toString() {
@@ -91,6 +109,7 @@ public class Post {
                 ", dateOfPost=" + dateOfPost +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", postData='" + postData + '\'' +
+                ", imageContentType='" + imageContentType + '\'' +
                 '}';
     }
 }

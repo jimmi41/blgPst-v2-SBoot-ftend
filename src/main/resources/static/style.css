@@ -5,8 +5,18 @@
     box-sizing: border-box;
 }
 
+
 body {
     background-color: #2e364a;
+     /* Background image */
+        background-image: url("/images/bgBilkhet.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+
+        /* Make it subtle */
+        background-color: #2e364a; /* fallback */
 }
 
 .timeline {
@@ -236,7 +246,7 @@ body {
 }
 /* Navbar */
 .navbar {
-    background-color: #dee88e;
+    background-color: #b4b4b3;
     color : black;
     padding: 10px 0;
     font-family: 'Noto Sans Devanagari', 'Devanagari', 'poppins', 'sans-serif';
