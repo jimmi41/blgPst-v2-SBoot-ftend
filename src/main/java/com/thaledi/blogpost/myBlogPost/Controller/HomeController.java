@@ -23,6 +23,11 @@ public class HomeController {
         return "storyPage"; // This corresponds to storyPage.html
     }
 
+    @GetMapping("/aboutMe")
+    public String showAboutMe() {
+        return "aboutMe";
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/adminPage")
     public String showAdminPage() {
